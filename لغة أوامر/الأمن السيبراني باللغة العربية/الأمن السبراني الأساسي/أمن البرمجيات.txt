@@ -1,0 +1,70 @@
+أكتب مباشرة الكود البرمجي المقترح بشكل صحيح وجملة صحيحة يمكن قرائتها وفهمها من قبل الجميع باللغة العربية الفصحى مع ذكر مثال لطريقة تطبيق هذا الأمر البرمجي 
+
+## كود تشفير الرسائل في الأمن السيبراني
+
+أنت تريد أن تضمن أنه أثناء إرسال الرسائل عبر الإنترنت، تبقى الرسائل آمنة وسرية. هذا يعرف ب"التشفير". في هذا السياق، أقدم لك كود بسيط لتشفير وفك تشفير الرسائل باستخدام لغة البرمجة البايثون ومكتبة الـ `cryptography`. هذه المكتبة تدعم اللغة العربية أيضا. 
+
+```python
+from cryptography.fernet import Fernet
+
+def generate_key():
+    """
+    هذه الدالة تولد مفتاح تشفير وتتأكد من حفظه آمنا.
+    """
+    key = Fernet.generate_key()
+    with open("secret.key", "wb") as key_file:
+        key_file.write(key)
+
+def load_key():
+    """
+    هذه الدالة تقرأ المفتاح التشفير من الملف.
+    """
+    return open("secret.key", "rb").read()
+
+def encrypt_message(message):
+    """
+    هذه الدالة تشفر الرسائل باستخدام المفتاح التشفير.
+    """
+    key = load_key()
+    encoded_message = message.encode()
+    f = Fernet(key)
+    encrypted_message = f.encrypt(encoded_message)
+
+    return encrypted_message
+
+def decrypt_message(encrypted_message):
+    """
+    هذه الدالة تفك تشفير الرسالة إلى نصها الأصلي.
+    """
+    key = load_key()
+    f = Fernet(key)
+    decrypted_message = f.decrypt(encrypted_message)
+
+    return decrypted_message.decode()
+```
+
+## مثال على كيفية استخدام الكود بالأعلى:
+
+```python
+# توليد المفتاح
+generate_key()
+
+# الرسالة التي تريد تشفيرها
+message = "مرحبًا، أنا رسالة سرية!"
+
+# تشفير الرسالة
+encrypted_message = encrypt_message(message)
+print(encrypted_message)
+
+# فك تشفير الرسالة
+decrypted_message = decrypt_message(encrypted_message)
+print(decrypted_message)
+```
+
+نتيجة الأوامر التالية ستظهر هكذا:
+```
+b'gAAAAABhft9sB6xpu6iGgRcvBJkoRkMx7eTxfhka6KjRFOC5o3rjpl8S1veBzkRuMKtbbU1wWOMBoPUTX9f94JBQacn8PW3H0Q=='
+مرحبًا، أنا رسالة سرية!
+```
+
+احرص على ألا يُطلع أحد على المفتاح الخاص بك.
